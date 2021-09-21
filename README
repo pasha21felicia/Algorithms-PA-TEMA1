@@ -1,0 +1,73 @@
+Digori Parascovia - PA - tema 1
+
+Problema 1: Crypto
+
+
+La inceput am reprezentat perechile printr-un vector de perechi vect(p_i, u_i).
+Problema se rezolva prin Greedy, astfel am sortat vectorul dupa primul element.
+In continuare mi-am luat doua variabile ajutatoare result (care l-a inceput este primul
+element din prima pereche a vectorului sortat) - reprezinta numarul de criptomonede pe care
+la poate cumpara la moment, si sum - suma platita care mereu trebuie sa fie <= ca bugetul
+total. 	Asigurandu-ma ca sum <= B o sa verific mereu daca p_i == p_i+1 -> o sa adun suma 
+simplu. Daca (p_i != p_i+1) pentru metoda mea am identificat 2 cazuri:
+I: cand (p_i == result) inseamna p_i+1 este doar cu 1 mai mare decat p_i deci pot sa platesc
+suma, scad din B suma platita si cresc result doar cu 1.
+II. cand (p_i > result) inseamna ca voi avea nevoie de mai multe iterari si cresteri pana 
+ajung la p_i+1 asa ca caut interior sa cresc suma pana gasesc maximul de result care imi
+permit sa-l platesc. 
+
+Varianta asta imi pica 2 teste, fiind o implementare ineficienta pentru cazul cand 
+p_i > result, dar mie imi pare o idee draguta asa ca am lasat-o asa.
+Complexitatea O(N*N)
+
+Problema 2: Stocks
+
+Aceasta problema se bazeaza pe programare dinamica varianta rucsacului.
+In implementare am folosit materialul oferit in laboratorul de programare dinamica 1 cu 
+mici adaptari pentru o varianta cu 2 constrangeri, astfel am obtinut o matrice 3D. 
+Prima dimensiune este pentru a indica actiunile, a doua - banii platiti <= B si o noua 
+dimensiune pentru pierderi <= L. Am parcurs cele 3 dimensiuni ale vectorului 3D si verific
+conditiile daca am destui bani pentru a cumpara (j - curr[i-1] >= 0) si daca  loss-ul 
+in suma va fi <= ca lossul acceptabil (l - (curr[i-1] - mini[i-1]) >= 0). Daca conditia 
+se intalneste inseamna ca o sa iau obiectul i si trebuie sa rezerv curr[i] unitati din buget.
+Complexitatea O(N*B*L)
+
+Problema 3: Valley
+
+heights(N) - vectorul de inaltimi dat ca input, N - nr elemente
+Pentru a rezolva problema asta m-am folosit de 4 vectori auxiliari cu N elemente:
+- leftMin(N) - retine pe pozitia i cel mai mic element din partea stanga a lui heights(i)
+- rightMin(N) - retine pe pozitia i cel mai mic element din partea dreapta a lui heights(i)
+- makeLeft(N) - este un vector de neajunsuri pentru partea stanga dupa formula 
+				(heights[i] - leftMin[i])
+- makeRight(N) - este un vector de neajunsuri pentru partea dreapta dupa formula 
+				(heights[i] - rightMin[i])
+Apoi am observat ca in vectorii makeLeft si makeRight o sa determine intr-o anumita pozitie i
+(0, 0) - ala este punctul cel mai de jos al vaii, deci hole-ul.
+Daca amm obtinut hole-ul fara probleme atunci solutia se va regasi drept suma de minimuri dintre
+min(makeLeft[i], makeRight[i]).
+In caz contrar, nu s-a putut gasi o vale deoarece era o panta cresc/descr prin urmare solutia 
+se va regasi ca maxim dintre cea mai mica pereche dintre cei doi vectori. (Pentru asta am creat
+un vector de perechi dintre makeLeft si makeRight).
+Complexitatea O(N)
+
+
+Problema 4: Ridge
+
+Aceasta problema am rezolvat-o utilizand programarea dinamica, creand un vector 2D, unde
+prima dimensiune reprezinta elementele si a doua dimensiune arata de cate ori poate fi incrementat
+un element. Astfel matricea va genera costul minim pentru a crea un munte. Astfel am verificat 4
+cazuri:
+- daca elementul curent nu este egal cu elementul precedent care nu a fost deloc crescut
+- daca elementul curent nu este egal cu elementul precedent care a fost crescut doar cu 1
+- daca elementul curent nu este egal cu elementul precedent care a fost crescut doar cu 2
+- daca elementul curent nu este egal cu elementul precedent care a fost crescut doar cu 3
+Pentru fiecare dintre aceste cazuri se recalculeaza costul minim si se introduce in matricea
+de costuri. Pentru rezultat o sa aflam minimul dintre toate cele 4 cazuri. 
+Complexitatea O(N)
+
+
+
+
+
+
